@@ -36,13 +36,13 @@ print_help() {
 }
 
 # No Zookeeper specified, exit
-if [[ "x${ZOOKEEPER}" -eq "x" ]]; then
+if [[ -z "${ZOOKEEPER}" ]]; then
   echo "ERROR: No zookeeper specified"
   print_help
 fi
 
 # No input file flag, use STDIN
-if [[ "x${INPUTFILE}" -eq "x" ]]; then
+if [[ -z "${INPUTFILE}" ]]; then
   echo "ERROR: no input acl file specified"
   print_help
 fi
