@@ -47,6 +47,7 @@ if [[ -z "${INPUTFILE}" ]]; then
   print_help
 fi
 
+
 # Read the file line by line
 while read LINE || [[ -n ${LINE} ]];do
   # If the line is empty this is the end of the resource
@@ -57,17 +58,17 @@ while read LINE || [[ -n ${LINE} ]];do
   # if we see that line begins with "Current" this is the beginning
   # of a resource
   if [[ "${LINE}" == "Current"* ]]; then
-    RESOURCE=$(echo "${LINE}"| awk -F \` '{print $2}' | awk -F : '{print $1}')
-    RESOURCE_NAME=$(echo "${LINE}"| awk -F \` '{print $2}' | awk -F : '{print $2}')
+    RESOURCE=$(echo "${LINE}"| awk -F \` '{print $2}' | awk -F resourceType= '{print $2}' | awk -F , '{print $1}')
+    RESOURCE_NAME=$(echo "${LINE}"| awk -F \` '{print $2}' | awk -F name= '{print $2}' | awk -F , '{print $1}')
     # Figure out the resource flag
     case "${RESOURCE}" in
-      Topic )
+      TOPIC )
         RESOURCE_FLAG="--topic"
         ;;
-      Group )
+      GROUP )
         RESOURCE_FLAG="--group"
         ;;
-      Cluster )
+      CLUSTER )
         RESOURCE_FLAG="--cluster"
         ;;
       * )
@@ -77,18 +78,18 @@ while read LINE || [[ -n ${LINE} ]];do
     esac
   else
     # These are the permissions for the resource
-    PRINCIPAL=$(echo "${LINE}" | awk '{print $1}')
-    PERMISSION=$(echo "${LINE}"| awk '{print $3}')
-    OPERATION=$(echo "${LINE}"| awk '{print $7}' | tr '[:upper:]' '[:lower:]')
-    HOSTS=$(echo "${LINE}"| awk '{print $10}')
+    PRINCIPAL=$(echo "${LINE}" | awk -F principal= '{print $2}' | awk -F , '{print $1}')
+    PERMISSION=$(echo "${LINE}" | awk -F permissionType= '{print $2}' | awk -F \) '{print $1}')
+    OPERATION=$(echo "${LINE}"|  awk -F operation= '{print $2}' | awk -F , '{print $1}' | tr '[:upper:]' '[:lower:]')
+    HOSTS=$(echo "${LINE}"| awk -F host= '{print $2}' | awk -F , '{print $1}')
 
     # Figure out the permission flag
     case "${PERMISSION}" in
-      Allow )
+      ALLOW )
         PERMISSION_FLAG="--allow-principal"
         HOST_PERMISSION_FLAG="--allow-host"
         ;;
-      Deny )
+      DENY )
         PERMISSION_FLAG="--deny-principal"
         HOST_PERMISSION_FLAG="--deny-host"
         ;;
@@ -101,3 +102,4 @@ while read LINE || [[ -n ${LINE} ]];do
     echo "kafka-acls --authorizer-properties zookeeper.connect=${ZOOKEEPER} --add ${PERMISSION_FLAG} ${PRINCIPAL} ${HOST_PERMISSION_FLAG} ${HOSTS} --operation ${OPERATION} ${RESOURCE_FLAG} ${RESOURCE_NAME}"
   fi
 done <${INPUTFILE}
+
