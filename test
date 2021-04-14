@@ -1,0 +1,13 @@
+Current ACLs for resource `ResourcePattern(resourceType=GROUP, name=AccrualDateProcessor, patternType=LITERAL)`:
+        (principal=User:srvAP136959NP, host=*, operation=DESCRIBE, permissionType=ALLOW)
+        (principal=User:srvAP136959NP, host=*, operation=READ, permissionType=ALLOW)
+        (principal=User:srvpr173418-daf-np, host=*, operation=READ, permissionType=ALLOW)
+        (principal=User:srvpr173418-daf-np, host=*, operation=DESCRIBE, permissionType=ALLOW)
+
+Current ACLs for resource `ResourcePattern(resourceType=GROUP, name=devcusextgroup, patternType=LITERAL)`:
+        (principal=User:srvAP138425NP, host=*, operation=DESCRIBE, permissionType=ALLOW)
+        (principal=User:srvAP138425NP, host=*, operation=READ, permissionType=ALLOW)
+
+Current ACLs for resource `ResourcePattern(resourceType=GROUP, name=AccrualIncomeProcessor, patternType=LITERAL)`:
+        (principal=User:srvAP136959NP, host=*, operation=READ, permissionType=ALLOW)
+        (principal=User:srvpr173418-daf-np, host=*, operation=DESCRIBE, permissionType=ALLOW)
