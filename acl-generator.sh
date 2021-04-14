@@ -48,12 +48,6 @@ if [[ -z "${INPUTFILE}" ]]; then
 fi
 
 
-#Current ACLs for resource `ResourcePattern(resourceType=GROUP, name=AccrualDateProcessor, patternType=LITERAL)`:
-#        (principal=User:srvAP136959NP, host=*, operation=DESCRIBE, permissionType=ALLOW)
-#        (principal=User:srvAP136959NP, host=*, operation=READ, permissionType=ALLOW)
-#        (principal=User:srvpr173418-daf-np, host=*, operation=READ, permissionType=ALLOW)
-#        (principal=User:srvpr173418-daf-np, host=*, operation=DESCRIBE, permissionType=ALLOW)
-        
 # Read the file line by line
 while read LINE || [[ -n ${LINE} ]];do
   # If the line is empty this is the end of the resource
